@@ -1,0 +1,134 @@
+<div class="container mt-4 mb-2 myborder" style="padding:5px 25px;border-radius: 15px;">
+    <form [formGroup]='myForm' (ngSubmit)='onsubmit()'>
+        <div class="row card-body mt-2  mycard shadow-sm" id="row1">
+            <div class="col col-12 col-sm-6 col-md-6">
+                <div class="form-group" >
+                    <label>clientName:</label>
+                    <input type="text" name="clientName" formControlName="clientName" class="form-control" [class.is-invalid]="clientName.invalid && clientName.touched" [class.is-valid]="clientName.valid">
+                    <div *ngIf="clientName.invalid && clientName.touched">
+                        <small class="text-danger" *ngIf="clientName.errors?.required">Client name shoud be required*</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-sm-6 col-md-6">
+                <div class="form-group">
+                    <label>clientshortName:</label>
+                    <input type="text" name="clientshortName" formControlName="clientshortName" class="form-control" [class.is-invalid]="clientshortName.invalid && clientshortName.touched" [class.is-valid]="clientshortName.valid">
+                    <div *ngIf="clientshortName.invalid && clientshortName.touched">
+                        <small class="text-danger" *ngIf="clientshortName.errors?.required">Client short name shoud be required*</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-md-6">
+                <div class="form-group">
+                    <label>title:</label>
+                    <input type="text" name="title" formControlName="title" class="form-control" [class.is-invalid]="title.invalid && title.touched" [class.is-valid]="title.valid">
+                    <div *ngIf="title.invalid && title.touched">
+                        <small class="text-danger" *ngIf="title.errors?.required">Title shoud be required*</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-md-6">
+                <div class="form-group">
+                    <label>Qualification:</label>
+                    <input type="text" name="qualification" formControlName="qualification" class="form-control" [class.is-invalid]="qualification.invalid && qualification.touched" [class.is-valid]="qualification.valid">
+                    <div *ngIf="qualification.invalid && qualification.touched">
+                        <small class="text-danger" *ngIf="qualification.errors?.required">Qualification shoud be required*</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-md-6">
+                <div class="form-group">
+                    <label for="comment">positions:</label>
+                    <input type="number" name="positions" formControlName="positions" class="form-control" [class.is-invalid]="positions.invalid && positions.touched" [class.is-valid]="positions.valid">
+                    <div *ngIf="positions.invalid && positions.touched">
+                        <small class="text-danger" *ngIf="positions.errors?.required"> No. of positions shoud be required*</small>
+                    </div>
+                </div>  
+            </div>
+            <i class="fa fa-minus-circle" aria-hidden="true" style="position: absolute;top:10px;right:10px;" (click)='myFunction($event.target.parentNode.id)'></i>
+            
+        </div>
+
+        <div class="row card-body mt-2 mycard" id="row2">
+            <div class="col col-12 col-md-12">
+                <div class="form-group">
+                    <label for="comment">description:</label>
+                    <textarea class="form-control" rows="3" formControlName='description' [class.is-invalid]="description.invalid && description.touched" [class.is-valid]="description.valid"></textarea>
+                    <div *ngIf="description.invalid && description.touched">
+                        <small class="text-danger" *ngIf="description.errors?.maxlength">Password contain at least 5 character</small>
+                        <small class="text-danger" *ngIf="description.errors?.required">Field should be Required</small>
+                    </div>
+                </div>  
+            </div>
+            <i class="fa fa-minus-circle" aria-hidden="true" style="position: absolute;top:10px;right:10px;" (click)='myFunction($event.target.parentNode.id)'></i>
+        </div>
+         
+        <div class="row card-body mt-2 mycard" id="row3">
+            <div class="col col-12 col-md-6">
+                <div class="form-group">
+                    <label for="comment">start date:</label>
+                    <input type="text" bsDatepicker  [minDate]="minDate" [bsConfig]='datePickerConfig'  name="startDate"  [dateCustomClasses]="dateCustomClasses" formControlName="startDate" class="form-control"  [class.is-invalid]="startDate.invalid && startDate.touched" [class.is-valid]="startDate.valid">
+                    <div *ngIf="startDate.invalid && startDate.touched">
+                        <small class="text-danger" *ngIf="startDate.errors?.required">startDate should be Required</small>
+                    </div>
+                </div>  
+            </div>
+             <div class="col col-12 col-md-6">
+                <div class="form-group">
+                    <label for="comment">end date:</label>
+                    <input type="text"  bsDatepicker [minDate]="minDate" [bsConfig]='datePickerConfig' [maxDate]="maxDate"  [dateCustomClasses]="dateCustomClasses" name="endDate" formControlName="endDate" class="form-control"  (ngModelChange)='compareTwoDates($event)' [class.is-invalid]="endDate.invalid && endDate.touched || error.isError" [class.is-valid]="endDate.valid && !error.isError">
+                    <small *ngIf="error.isError" class="text-danger">{{ error.errorMessage }}</small>
+                    <div *ngIf="endDate.invalid && endDate.touched">
+                        <small class="text-danger" *ngIf="endDate.errors?.required">startDate should be Required</small>
+                    </div>
+                </div>  
+            </div> 
+            <div class="col col-12 col-md-6">
+                <div class="form-group">
+                    <label for="comment">salary from:</label>
+                    <input type="number" name="salaryFrom" formControlName="salaryFrom" class="form-control" [class.is-invalid]="salaryFrom.invalid && salaryFrom.touched" [class.is-valid]="salaryFrom.valid">
+                </div>
+            </div>
+            <div class="col col-12 col-md-6">
+                <div class="form-group">
+                    <label for="comment">salary to</label>
+                    <input type="number" name="salaryTo" formControlName="salaryTo" class="form-control" [class.is-invalid]="salaryTo.invalid && salaryTo.touched" [class.is-valid]="salaryTo.valid">
+                </div>
+            </div>
+            <div class="col col-12 col-md-6">
+                <div class="form-group">
+                    <label for="comment">yearof-Exp:</label>
+                    <input type="number" name="yearOfExp" formControlName="yearOfExp" class="form-control" [class.is-invalid]="yearOfExp.invalid && yearOfExp.touched" [class.is-valid]="yearOfExp.valid">
+                </div>
+            </div>
+            <i class="fa fa-minus-circle" aria-hidden="true" style="position: absolute;top:10px;right:10px;" (click)='myFunction($event.target.parentNode.id)'></i>
+        </div> 
+ 
+        <div formArrayName='skills' id="row4" class=" row mycard card-body mt-2">
+            <div *ngFor="let control of skills.controls; index as i">
+                <div class="row" style="background: ; padding-left: 10px;">
+                    <div class="col col-md-8" >
+                        <div class="form-group">
+                            <label>skills{{i+1}}</label>
+                            <input type="text" name="skill" [formControlName]='i' class="form-control" [class.is-invalid]="skills.invalid && skills.touched" [class.is-valid]="skills.valid">
+                        </div>
+                    </div>
+                    <div class="col col-md-4">
+                        <button type="button" class="btn btn-outline-secondary mybtn" style="margin-top:34px" (click)='addSkills()'>+</button> &nbsp;
+                        <button type="button" class="btn btn-outline-secondary mybtn" style="margin-top:34px" (click)='removeSkills(i)'>-</button>
+                    </div>
+                </div>
+            </div>
+            <i class="fa fa-minus-circle" aria-hidden="true" style="position: absolute;top:10px;right:10px;" (click)='myFunction($event.target.parentNode.id)'></i>
+        </div>
+
+        <div class="row  mt-2">
+            <div class="col col-md-12 ">
+                <button type="submit" class="btn btn-primary  mt-1 float-right" [disabled]="!myForm.valid || error.isError" >submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+

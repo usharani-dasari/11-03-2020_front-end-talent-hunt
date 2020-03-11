@@ -1,0 +1,94 @@
+
+
+.mycard:hover {
+       box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+
+  .mycard {
+    border:1px dotted rgb(212, 205, 205);
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    
+  }
+  .minicard {
+      height: 10px !important;
+      overflow: hidden !important;
+      padding: 7px 1px 31px 1px !important;
+      border-radius: 0%;
+     
+  }
+  .z-depth {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    
+  }
+  .form-control {
+    padding: .0rem .0rem;
+   
+}
+
+
+
+.user-input-wrp {
+    position: relative;
+}
+
+ .inputText {
+    width: 100%;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    box-shadow: none !important;
+    border-radius: 0%;
+}
+
+
+
+.floating-label {
+    position: absolute;
+    pointer-events: none;
+    top: 18px;
+    left: 0px;
+    transition: 0.2s ease all;
+    
+}
+
+.user-input-wrp input:focus~.floating-label, .user-input-wrp input:not(:focus):valid~.floating-label {
+    top: 0px;
+    left: 0px;
+    font-size: 13px;
+    opacity: 1;
+    
+}
+input:focus {
+  
+    border-bottom: 2px solid #212529 !important;
+}
+.user-input-wrp textarea:focus~.floating-label, .user-input-wrp textarea:not(:focus):valid~.floating-label{
+    top: -15px;
+    left: 0px;
+    font-size: 13px;
+    opacity: 1;
+}
+.form-control.is-invalid {
+    border-color: #dc3545;
+    background-image: none;
+    border-bottom:0.05rem solid #dc3545;
+}
+
+.form-control.is-invalid, .was-validated .form-control:invalid {
+    border-color: #dc3545;
+    padding-right: calc(1.5em + .75rem);
+    background-image: ;
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+.form-control.is-valid, .was-validated .form-control:valid {
+    border-color: #212529 !important;
+    padding-right: calc(1.5em + .75rem);
+    /* background-image: none !important; */
+    background-repeat: no-repeat !important;
+    background-position: right calc(.375em + .1875rem) center !important;
+    background-size: calc(.5em + .325rem) calc(.75em + .375rem) !important;
+}

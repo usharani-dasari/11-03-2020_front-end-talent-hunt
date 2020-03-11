@@ -1,0 +1,303 @@
+  <div class="mycontainer">
+      <div class="row"> 
+        <div class="col col-md-5">
+          <input type="search" [(ngModel)]='searchByName' placeholder="Search by name..." class="form-control">
+        </div>
+        <div class="col col-md-5">
+          <input type="search" [(ngModel)]='searchByNumber' placeholder="Search by  number..." class="form-control">
+        </div>
+        <div class="col col-md-2">
+          <input type="button" value="Add candidate" class="btn btn-outline-primary" data-toggle="modal"  data-target="#addCandidate" (click)='clearForm()'>
+        </div>
+      </div>
+  </div>
+  
+  <div class="mycontainer  table-responsive mt-3">
+      <table class="table table-hover zdepth-5">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Location</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let candidate of (candidateList   |  candidatefilterByname:searchByName) ;index as i">
+              <th scope="row">{{i+1}}</th>
+              <td>{{candidate.candidateName}}</td>
+              <td>{{candidate.mailId}}</td>
+              <td>{{candidate.contactNumber}}</td>
+              <td>{{candidate.currentLoc}}</td>
+              <td><button  data-toggle="modal" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#editCandidate" style="cursor:pointer;text-align: center;" (click)='editCandidate(candidate)'>
+                    <i class="fa fa-pencil-square-o" aria-hidden="true" data-toggle="tooltip" data-placement="left"  title="Edit"></i></button>
+              </td>
+              <td><button class="btn  btn-danger btn-sm" style="cursor:pointer"data-toggle='modal' data-target="#candidateListModal"  (click)='saveCandidate(candidate)'>
+                  <i class="fa fa-trash" aria-hidden="true" data-placement="right"  title="Delete" data-toggle="tooltip"></i></button>
+              </td>
+            </tr>
+          </tbody>
+       </table>
+  </div>
+  
+  <div class="modal fade" id="addCandidate" tabindex="-1" role="dialog">
+    <form [formGroup]='candidateForm'>
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" >Add Candidate</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="padding-top: 0 !important;">
+            <div class="row card-body mt-2 mycard zdepth-1" id="row1">
+              <div class="col col-md-4">
+                <input type="hidden" name="candidateId" formControlName='candidateId'>
+                <div class="form-group">
+                  <label>Recruiter Name</label>
+                  <input type="text" name="recruiterName" formControlName='recruiterName' class="form-control">
+                </div>
+              </div>
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label>Candidate Name</label>
+                  <input type="text" name="candidateName" class="form-control" formControlName='candidateName' >
+                </div>
+              </div>
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" name="mailId" class="form-control" formControlName='mailId'>
+                </div>
+              </div>
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label>Contact Num</label>
+                  <input type="Number" name="contactNumber" class="form-control" (blur)="sendCandidatewithThisNumber(contactNumber.value)" formControlName='contactNumber'>
+                </div>
+              </div>
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label>Location</label>
+                  <input type="email" name="currentLoc" class="form-control" formControlName='currentLoc'>
+                </div>
+              </div>
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label>Prefered Location</label>
+                  <input type="email" name="currentLoc" class="form-control" formControlName='currentLoc'>
+                </div>
+              </div>
+              <!-- <i class="fa fa-minus-circle" aria-hidden="true" style="position: absolute;top:10px;right:10px;" (click)='myFunction($event.target.parentNode.id)'></i>  -->
+            </div>
+            <div class="row card-body mt-3 mycard zdepth-1" id="row2">
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label>CTC</label>
+                  <input type="Number" name="ctc" class="form-control" formControlName='ctc'>
+                </div>
+              </div>
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label>ECTC</label>
+                  <input type="Number" name="ectc" class="form-control" formControlName='ectc'>
+                </div>
+              </div>
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label>Total Exp</label>
+                  <input type="number" name="totalExp" class="form-control" formControlName='totalExp'>
+                </div>
+              </div>
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label>Relavant Exp</label>
+                  <input type="number" name="relExperience" class="form-control" formControlName='relExperience'>
+                </div>
+              </div>
+              
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label>Current Organization</label>
+                  <input type="text" name="currOraganization" class="form-control" formControlName='currOraganization'>
+                </div>
+              </div>
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label>Notice Period</label>
+                  <input type="number" name="noticePeriod" class="form-control" formControlName='noticePeriod'>
+                </div>
+              </div>
+              <!-- <i class="fa fa-minus-circle" aria-hidden="true" style="position: absolute;top:10px;right:10px;" (click)='myFunction($event.target.parentNode.id)'></i>  -->
+            </div>
+            <div formArrayName='skills' id="row4" class=" row mycard card-body mt-2 ">
+              <div *ngFor="let control of skills.controls; index as i" style="width:100%;">
+                  <div class="row" style=" padding-left: 10px;">
+                      <div class="col col-md-8" >
+                          <div class="form-group">
+                              <label>Skills{{i+1}}</label>
+                              <input type="text" name="skill" [formControlName]='i' class="form-control" >
+                          </div>
+                      </div>
+                      <div class="col col-md-4">
+                          <button type="button" class="btn btn-outline-secondary mybtn" style="margin-top:34px" (click)='addSkills()'>+</button> &nbsp;
+                          <button type="button" class="btn btn-outline-secondary mybtn" style="margin-top:34px" (click)='removeskill(i)' >-</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)='addCandidate()'>Submit</button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+  
+  <div class="modal fade" id="editCandidate" tabindex="-1" role="dialog">
+    <form [formGroup]='candidateForm'>
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Candidate</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="row card-body mt-2 mycard shodow" id="row2">
+              <div class="col col-md-6">
+                  <input type="hidden" name="candidateId" formControlName='candidateId'>
+  
+                <div class="form-group">
+                  <label>Recruiter Name</label>
+                  <input type="text" name="recruiterName" formControlName='recruiterName' class="form-control">
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>Candidate Name</label>
+                  <input type="text" name="candidateName" class="form-control" formControlName='candidateName' >
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>Date</label>
+                  <input type="date" name="joiningDate" class="form-control" formControlName='joiningDate'>
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>Total Exp</label>
+                  <input type="number" name="totalExp" class="form-control" formControlName='totalExp'>
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>Relavant Exp</label>
+                  <input type="number" name="relExperience" class="form-control" formControlName='relExperience'>
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" name="mailId" class="form-control" formControlName='mailId'>
+                </div>
+              </div>
+              <i class="fa fa-minus-circle" aria-hidden="true" style="position: absolute;top:10px;right:10px;" (click)='myFunction($event.target.parentNode.id)'></i> 
+            </div>
+            <div class="row card-body mt-2 mycard shodow" id="row1">
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>CTC</label>
+                  <input type="Number" name="ctc" class="form-control" formControlName='ctc'>
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>ECTC</label>
+                  <input type="Number" name="ectc" class="form-control" formControlName='ectc'>
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>Contact Num</label>
+                  <input type="Number" name="contactNumber" class="form-control" formControlName='contactNumber'>
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>Current Organization</label>
+                  <input type="text" name="currOraganization" class="form-control" formControlName='currOraganization'>
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>Notice Period</label>
+                  <input type="number" name="noticePeriod" class="form-control" formControlName='noticePeriod'>
+                </div>
+              </div>
+              <div class="col col-md-6">
+                <div class="form-group">
+                  <label>Location</label>
+                  <input type="email" name="currentLoc" class="form-control" formControlName='currentLoc'>
+                </div>
+              </div>
+              <!-- <i class="fa fa-minus-circle" aria-hidden="true" style="position: absolute;top:10px;right:10px;" (click)='myFunction($event.target.parentNode.id)'></i>  -->
+            </div>
+            <div formArrayName='skills' id="row4" class=" row mycard card-body mt-2 ">
+              <div *ngFor="let control of skills.controls; index as i" style="width:100%;">
+                  <div class="row" style=" padding-left: 10px;">
+                      <div class="col col-md-8" >
+                          <div class="form-group">
+                              <label>Skills{{i+1}}</label>
+                              <input type="text" name="skill" [formControlName]='i' class="form-control" >
+                          </div>
+                      </div>
+                      <div class="col col-md-4">
+                          <button type="button" class="btn btn-outline-secondary mybtn" style="margin-top:34px" (click)='addSkills()'>+</button> &nbsp;
+                          <button type="button" class="btn btn-outline-secondary mybtn" style="margin-top:34px" (click)='removeskill(i)' >-</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" (click)='updateCandidate(candidateForm)' data-dismiss="modal">Submit</button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+  
+  <div class="modal fade" id="candidateListModal" tabindex="-1" role="dialog" aria-labelledby="joblistLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="joblistLabel">Please confirm.. </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            Do you really want to ... ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger"  data-dismiss="modal" (click)='deleteCandidate()'>Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
